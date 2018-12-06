@@ -4,4 +4,4 @@ from api.views import ArticleViewSet
 
 router = routers.DefaultRouter()
 
-router.register(r'article/', ArticleViewSet)
+router.register('article', ArticleViewSet)
