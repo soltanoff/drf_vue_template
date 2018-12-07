@@ -3,5 +3,5 @@ from django.db import models
 
 class ArticleModel(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(name='Title', max_length=250)
-    content = models.TextField(name='Content')
+    title = models.CharField(name='title', max_length=250)
+    content = models.TextField(name='content')

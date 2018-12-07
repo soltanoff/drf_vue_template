@@ -5,8 +5,8 @@ from article.models import ArticleModel
 
 @admin.register(ArticleModel)
 class ArticleAdminModel(admin.ModelAdmin):
-    search_fields = ('Title',)
-    list_display = ('id', 'Title')
+    search_fields = ('title',)
+    list_display = ('id', 'title')
     fieldsets = (
-        ('Article', {'fields': ['Title', 'Content']}),
+        ('Article', {'fields': ['title', 'content']}),
     )
