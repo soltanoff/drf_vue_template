@@ -22,8 +22,9 @@ from api.routers import schema_js as api_schema_js
 
 urlpatterns = [
     url(r'^manage/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls')),
-    url(r'^api/', include(api_router.urls)),
     url('^schema$', api_schema),
     url('^schema_js$', api_schema_js),
+    url(r'^api/', include(api_router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^article/', include('article.urls')),
 ]
