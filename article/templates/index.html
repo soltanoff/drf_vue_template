@@ -131,8 +131,6 @@
     transform: rotate(360deg);
   }
 }
-
-
     </style>
 
 </head>
@@ -170,6 +168,7 @@
                     <th scope="row">${article.id}</th>
                     <td>${article.title}</td>
                     <td>
+                        <button class="btn btn-info" v-on:click="showArticle(article.id)">Show</button>
                         <button class="btn btn-info" v-on:click="getArticle(article.id)">Edit</button>
                         <button class="btn btn-danger" v-on:click="deleteArticle(article.id)">Delete</button>
                     </td>
@@ -216,7 +215,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="loading" v-if="loading===true">Loading&#8230;</div>
+                <div class="loading" v-if="loading">Loading&#8230;</div>
             </div>
             <!-- End of add article modal -->
             <!-- Edit Article Modal -->
@@ -259,13 +258,35 @@
                         </form>
                     </div>
                 </div>
-                <div class="loading" v-if="loading===true">Loading&#8230;</div>
+                <div class="loading" v-if="loading">Loading&#8230;</div>
             </div>
             <!-- End of edit article modal -->
-
+            <!-- Edit Show Modal -->
+            <div class="preview" v-if="preview">
+                <h5>ARTICLE:</h5>
+                <div>
+                    <div class="form-group">
+                        <label>Article Heading</label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               v-model="currentArticle.title"
+                               readonly="true">
+                    </div>
+                    <div class="form-group">
+                        <label>Article Body</label>
+                        <textarea class="form-control"
+                                  id="content"
+                                  v-model="currentArticle.content"
+                                  readonly="true"
+                                  rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- End of show article modal -->
         </div>
     </div>
-    <div class="loading" v-if="loading===true">Loading&#8230;</div>
+    <div class="loading" v-if="loading">Loading&#8230;</div>
 
 </div>
 
@@ -291,6 +312,7 @@
       data: {
         articles: [],
         loading: true,
+        preview: false,
         currentArticle: {},
         message: null,
         newArticle: { 'title': '', 'content': '' },
@@ -317,15 +339,23 @@
               })
         },
         getArticle: function(id) {
-          this.loading = true;
           this.$http.get(`/api/article/${id}/`)
               .then((response) => {
                 this.currentArticle = response.data;
                 $("#editArticleModal").modal('show');
-                this.loading = false;
               })
               .catch((err) => {
-                this.loading = false;
+                console.log(err);
+              })
+        },
+        showArticle: function(id) {
+          this.$http.get(`/api/article/${id}/`)
+              .then((response) => {
+                this.currentArticle = response.data;
+                this.preview = true;
+              })
+              .catch((err) => {
+                this.preview = false;
                 console.log(err);
               })
         },
