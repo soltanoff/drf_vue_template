@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 
 from api.routers import router as api_router
@@ -26,5 +28,7 @@ urlpatterns = [
     url('^schema_js$', api_schema_js),
     url(r'^api/', include(api_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls')),
-    url(r'^article/', include('article.urls')),
+    url(r'', include('article.urls')),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
