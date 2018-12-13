@@ -1,0 +1,20 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Available actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="article in articles">
+        <th scope="row">${article.id}</th>
+        <td>${article.title}</td>
+        <td>
+            <button class="btn btn-info" v-on:click="showArticle(article.id)">Show</button>
+            <button class="btn btn-info" v-on:click="getArticle(article.id)">Edit</button>
+            <button class="btn btn-danger" v-on:click="deleteArticle(article.id)">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
