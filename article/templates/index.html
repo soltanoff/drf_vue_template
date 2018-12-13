@@ -33,7 +33,7 @@
                        placeholder="Search"
                        v-model="search_term"
                        aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" v-on:click.prevent="getArticles()">Search</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" v-on:click.prevent="getArticles(useLoading=false)">Search</button>
             </div>
             <table class="table">
                 <thead>
@@ -203,12 +203,12 @@
         this.getArticles();
       },
       methods: {
-        getArticles: function() {
+        getArticles: function(useLoading=true) {
           let api_url = '/api/article/';
           if(this.search_term!==''||this.search_term!==null) {
             api_url = `/api/article/?search=${this.search_term}`
           }
-          this.loading = true;
+          this.loading = useLoading;
           this.$http.get(api_url)
               .then((response) => {
                 this.articles = response.data;
