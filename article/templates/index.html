@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- boostrap css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/index_style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 </head>
 
 <body>
@@ -39,8 +39,8 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Heading</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Available actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -69,19 +69,19 @@
                         <form v-on:submit.prevent="addArticle()">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="title">Article Heading</label>
+                                    <label for="title">Article title</label>
                                     <input type="text"
                                            class="form-control"
                                            id="title"
-                                           placeholder="Enter Article Heading"
+                                           placeholder="Enter title"
                                            v-model="newArticle.title"
                                            required="required">
                                 </div>
                                 <div class="form-group">
-                                    <label for="content">Article Body</label>
+                                    <label for="content">Article content</label>
                                     <textarea class="form-control"
                                               id="content"
-                                              placeholder="Enter Article Body"
+                                              placeholder="Enter content"
                                               v-model="newArticle.content"
                                               required="required"
                                               rows="3"></textarea>
@@ -112,19 +112,19 @@
                         <form v-on:submit.prevent="updateArticle()">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="title">Article Heading</label>
+                                    <label for="title">Article title</label>
                                     <input type="text"
                                            class="form-control"
                                            id="title"
-                                           placeholder="Enter Article Heading"
+                                           placeholder="Enter Article title"
                                            v-model="currentArticle.title"
                                            required="required">
                                 </div>
                                 <div class="form-group">
-                                    <label for="content">Article Body</label>
+                                    <label for="content">Article content</label>
                                     <textarea class="form-control"
                                               id="content"
-                                              placeholder="Enter Article Body"
+                                              placeholder="Enter content"
                                               v-model="currentArticle.content"
                                               required="required"
                                               rows="3"></textarea>
@@ -147,7 +147,7 @@
                 <h5>ARTICLE:</h5>
                 <div>
                     <div class="form-group">
-                        <label>Article Heading</label>
+                        <label>Article title</label>
                         <input type="text"
                                class="form-control"
                                id="title"
@@ -155,7 +155,7 @@
                                readonly="true">
                     </div>
                     <div class="form-group">
-                        <label>Article Body</label>
+                        <label>Article content</label>
                         <textarea class="form-control"
                                   id="content"
                                   v-model="currentArticle.content"
