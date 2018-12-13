@@ -107,4 +107,4 @@ venv.bak/
 .idea/
 
 # Static files
-static/
+/static/
