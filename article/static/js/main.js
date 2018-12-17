@@ -1,4 +1,3 @@
-Vue.http.headers.common['X-CSRFToken'] = "{{ csrf_token }}";
 new Vue({
   el: '#starting',
   delimiters: ['${','}'],
@@ -15,15 +14,15 @@ new Vue({
     this.getArticles();
   },
   methods: {
-    getArticles: function(useLoading=true) {
+    getArticles: function(useLoading=true, page=1) {
       let api_url = '/api/article/';
       if(this.search_term!==''||this.search_term!==null) {
-        api_url = `/api/article/?search=${this.search_term}`
+        api_url = `/api/article/?search=${this.search_term}&page=${page}`
       }
       this.loading = useLoading;
       this.$http.get(api_url)
           .then((response) => {
-            this.articles = response.data;
+            this.articles = response.data['results'];
             this.loading = false;
           })
           .catch((err) => {
