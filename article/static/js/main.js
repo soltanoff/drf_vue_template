@@ -1,5 +1,5 @@
 new Vue({
-  el: '#starting',
+  el: '#app',
   delimiters: ['${','}'],
   data: {
     articles: [],
