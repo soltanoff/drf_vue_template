@@ -7,4 +7,4 @@ class ArticleModel(models.Model):
     content = models.TextField(name='content')
 
     class Meta:
-       ordering = ['id']
+        ordering = ['id']
