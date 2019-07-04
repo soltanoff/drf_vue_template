@@ -1,26 +1,84 @@
-<!DOCTYPE html>
+<!DOCTYPE html>{% load static %}
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>CRUD app</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A simple CRUD app made with the Vue.js and Django (DRF)">
-    <meta name="keywords" content="vuejs, django, crudapp, restapi, djangorestframework, drf">
-    {% include "head_scripts.html" %}
-</head>
-<body>
-<div id="app">
-    <div class="container">
-        <div class="row">
-            {% include "cap_page.html" with title="List of Articles" %}
-            {% include "table.html" %}
-            {% include "preview.html" %}
-            {% include "modal_window.html" with id="addArticleModal" title="ADD ARTICLE" func="addArticle" article="newArticle" %}
-            {% include "modal_window.html" with id="editArticleModal" title="EDIT ARTICLE" func="updateArticle" article="currentArticle" %}
+    <head>
+        <meta charset="utf-8">
+        <title>CRUD app</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A simple CRUD app made with the Vue.js and Django (DRF)">
+        <meta name="keywords" content="vuejs, django, crudapp, restapi, djangorestframework, drf">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+        <!-- bootrtap js files -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+    </head>
+    <body>
+        <div id="app">
+            <div class="loading" v-if="loading">Loading&#8230;</div>
+            <div class="container">
+                <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+                <h1>List of Articles
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#addArticleModal">ADD ARTICLE
+                    </button>
+                </h1>
+                &emsp;
+                <div class="form-inline my-2 my-lg-0" style="margin-left: 5%;">
+                    <input class="form-control mr-sm-2"
+                           type="text"
+                           placeholder="Search"
+                           v-model="search_term"
+                           aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" v-on:click.prevent="getArticles()">Search</button>
+                </div>
+                <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Available actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="article in articles" v-if="!loading">
+                        <th scope="row">${article.id}</th>
+                        <td>${article.title}</td>
+                        <td>
+                            <button class="btn btn-info" v-on:click="showArticle(article.id)">Show</button>
+                            <button class="btn btn-info" v-on:click="getArticle(article.id)">Edit</button>
+                            <button class="btn btn-danger" v-on:click="deleteArticle(article.id)">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+                {% include "preview.html" %}
+                {% include "modal.html" with id="addArticleModal" title="ADD ARTICLE" func="addArticle" article="newArticleTemplate" %}
+                {% include "modal.html" with id="editArticleModal" title="EDIT ARTICLE" func="updateArticle" article="currentArticle" %}
+                <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+            </div>
         </div>
-    </div>
-    <div class="loading" v-if="loading">Loading&#8230;</div>
-</div>
-{% include "body_scripts.html" %}
-</body>
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+        <!-- vue.js files -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script type="text/javascript">Vue.http.headers.common['X-CSRFToken'] = "{{ csrf_token }}";</script>
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+    </body>
 </html>
