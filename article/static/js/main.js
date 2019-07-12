@@ -4,7 +4,12 @@ new Vue({
     data: {
         loading: true,
         preview: false,
-        
+
+        current_page: 1,
+        page_count: 0,
+        next_page_url: '',
+        previous_page_url: '',
+
         articles: [],
         currentArticle: {},
         newArticleTemplate: {'title': '', 'content': ''},
@@ -15,12 +20,16 @@ new Vue({
         this.getArticles();
     },
     methods: {
-        getArticles: function(withLoading=true) {
+        getArticles: function(url=`/api/article/`, withLoading=true) {
             this.loading = withLoading;
             this.$http
-                .get(`/api/article/`)
+                .get(url)
                 .then((response) => {
-                    this.articles = response.data;
+                    this.page_count = response.data.current_page;
+                    this.page_count = response.data.page_count;
+                    this.next_page_url = response.data.next_page_url;
+                    this.previous_page_url = response.data.previous_page_url;
+                    this.articles = response.data.articles;
                     this.loading = false;
                 })
                 .catch((error) => {
