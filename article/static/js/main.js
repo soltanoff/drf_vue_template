@@ -2,13 +2,11 @@ new Vue({
     el: '#app',
     delimiters: ['${', '}'],
     data: {
-        loading: true,
+        loading: false,
         preview: false,
 
-        current_page: 1,
+        page: 1,
         page_count: 0,
-        next_page_url: '',
-        previous_page_url: '',
 
         articles: [],
         currentArticle: {},
@@ -19,23 +17,25 @@ new Vue({
     mounted: function() {
         this.getArticles();
     },
+    watch: {
+        page () {
+            this.page && this.getArticles(`/api/article/?page=${this.page}`, false);
+        }
+    },
     methods: {
         getArticles: function(url=`/api/article/`, withLoading=true) {
             this.loading = withLoading;
             this.$http
                 .get(url)
                 .then((response) => {
-                    this.page_count = response.data.current_page;
                     this.page_count = response.data.page_count;
-                    this.next_page_url = response.data.next_page_url;
-                    this.previous_page_url = response.data.previous_page_url;
                     this.articles = response.data.articles;
-                    this.loading = false;
                 })
                 .catch((error) => {
-                    this.loading = false;
                     console.log(error);
                 })
+            this.loading = false;
+            this.preview = false;
         },
         getArticle: function(id) {
             this.$http
@@ -65,11 +65,9 @@ new Vue({
             this.$http
                 .post(`/api/article/`, this.newArticleTemplate)
                 .then((response) => {
-                    this.loading = true;
                     this.getArticles();
                 })
                 .catch((error) => {
-                    this.loading = true;
                     console.log(error);
                 })
         },
@@ -78,27 +76,25 @@ new Vue({
             this.$http
                 .put(`/api/article/${this.currentArticle.id}/`, this.currentArticle)
                 .then((response) => {
-                    this.loading = false;
                     this.currentArticle = response.data;
                     this.getArticles();
                 })
                 .catch((error) => {
-                    this.loading = false;
                     console.log(error);
                 })
+            this.loading = false;
         },
         deleteArticle: function(id) {
             // this.loading = true;
             this.$http
                 .delete(`/api/article/${id}/`)
                 .then((response) => {
-                    this.loading = false;
                     this.getArticles(withLoading=false);
                 })
                 .catch((error) => {
-                    this.loading = false;
                     console.log(error);
                 })
+            this.loading = false;
         }
     }
 });
