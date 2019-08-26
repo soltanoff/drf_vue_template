@@ -6,21 +6,25 @@ new Vue({
         preview: false,
 
         page: 1,
-        page_count: 0,
+        pages_info: null,
 
         articles: [],
         currentArticle: {},
         newArticleTemplate: {'title': '', 'content': ''},
         
-        search_term: '',
+        search: '',
     },
     mounted: function() {
         this.getArticles();
     },
     watch: {
         page () {
-            this.page && this.getArticles(`/api/article/?page=${this.page}`, false);
-        }
+            this.page && this.getArticles(this.page, false);
+        },
+        search: function() {
+            value = this.search.trim().toUpperCase();
+            this.getArticles(`/api/article/?search=${value}`, false);
+        },
     },
     methods: {
         getArticles: function(url=`/api/article/`, withLoading=true) {
@@ -28,7 +32,7 @@ new Vue({
             this.$http
                 .get(url)
                 .then((response) => {
-                    this.page_count = response.data.page_count;
+                    this.pages_info = response.data.pages_info;
                     this.articles = response.data.articles;
                 })
                 .catch((error) => {
@@ -66,6 +70,8 @@ new Vue({
                 .post(`/api/article/`, this.newArticleTemplate)
                 .then((response) => {
                     this.getArticles();
+                    this.newArticleTemplate.title = '';
+                    this.newArticleTemplate.content = '';
                 })
                 .catch((error) => {
                     console.log(error);
