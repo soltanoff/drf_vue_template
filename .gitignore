@@ -109,4 +109,8 @@ venv.bak/
 # Static files
 /static/
 
+# Docker
+data/*
+static/*
+
 local_settings.py

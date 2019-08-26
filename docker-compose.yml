@@ -1,0 +1,25 @@
+version: "3"
+services:
+  drf_vue_template:
+    image: drf_vue_template
+    build:
+      context: .
+      dockerfile: dockerfiles/drf_vue_template.Dockerfile
+    volumes:
+      - ./data:/drf_vue_template/data
+    expose:
+      - "8000"
+    restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000 --insecure
+    depends_on:
+      - migration
+
+  migration:
+    image: drf_vue_template
+    build:
+      context: .
+      dockerfile: dockerfiles/drf_vue_template.Dockerfile
+    volumes:
+      - ./data:/drf_vue_template/data
+      - ./static:/drf_vue_template/static
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate"
