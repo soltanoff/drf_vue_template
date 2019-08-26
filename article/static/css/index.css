@@ -3,21 +3,6 @@
     width: 100%;
 }
 
-/* Absolute footer preview position */
-footer {
-    position: fixed;
-    left: 0; bottom: 0;
-    padding: 10px;
-    width: 100%;
-}
-
-/* Pagination preview position */
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center
-}
-
 /* Absolute Center Spinner */
 .loading {
     position: fixed;
