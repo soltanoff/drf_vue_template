@@ -42,3 +42,13 @@ To run with a docker compose:
 ```
 $ docker-compose up
 ```
+
+## Screens
+##### Example #1: Main page
+![Main page](assets/screen_1.png)
+##### Example #2: Pagination
+![Main page](assets/screen_2.png)
+##### Example #3: Create article
+![Main page](assets/screen_3.png)
+##### Example #4: Search article by title
+![Failed services](assets/screen_4.png)
