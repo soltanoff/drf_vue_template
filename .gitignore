@@ -108,3 +108,5 @@ venv.bak/
 
 # Static files
 /static/
+
+local_settings.py
