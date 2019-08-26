@@ -45,10 +45,10 @@ $ docker-compose up
 
 ## Screens
 ##### Example #1: Main page
-![Main page](assets/screen_1.png)
+![Main page](assets/screen_1.PNG)
 ##### Example #2: Pagination
-![Main page](assets/screen_2.png)
+![Pagination](assets/screen_2.PNG)
 ##### Example #3: Create article
-![Main page](assets/screen_3.png)
+![Create article](assets/screen_3.PNG)
 ##### Example #4: Search article by title
-![Failed services](assets/screen_4.png)
+![Search article by title](assets/screen_4.PNG)
