@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.utils.translation import gettext_lazy as _
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination, _get_page_links, _get_displayed_page_numbers
 from rest_framework.response import Response
