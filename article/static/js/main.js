@@ -5,7 +5,7 @@ new Vue({
         loading: false,
         preview: false,
 
-        page: 1,
+        page: '/api/article/',
         pages_info: null,
 
         articles: [],
@@ -69,7 +69,7 @@ new Vue({
             this.$http
                 .post(`/api/article/`, this.newArticleTemplate)
                 .then((response) => {
-                    this.getArticles();
+                    this.getArticles(this.page);
                     this.newArticleTemplate.title = '';
                     this.newArticleTemplate.content = '';
                 })
@@ -83,7 +83,7 @@ new Vue({
                 .put(`/api/article/${this.currentArticle.id}/`, this.currentArticle)
                 .then((response) => {
                     this.currentArticle = response.data;
-                    this.getArticles();
+                    this.getArticles(this.page);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -95,7 +95,7 @@ new Vue({
             this.$http
                 .delete(`/api/article/${id}/`)
                 .then((response) => {
-                    this.getArticles(withLoading=false);
+                    this.getArticles(this.page, withLoading=false);
                 })
                 .catch((error) => {
                     console.log(error);
