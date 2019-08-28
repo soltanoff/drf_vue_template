@@ -1,0 +1,51 @@
+<div class="container">
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+    <h1>List of Articles
+        <input class="form-control mr-sm-2"
+               v-model="search"
+               type="text"
+               placeholder="Filter articles by title"
+               value="{{ search }}"
+               autofocus>
+        <button type="button"
+                class="btn btn-outline-primary btn-sm btn-block"
+                data-toggle="modal"
+                style="margin-top: 5px;"
+                data-target="#addArticleModal">ADD ARTICLE</button>
+    </h1>
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Available actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="article in articles">
+            <th scope="row">${article.id}</th>
+            <td>${article.title}</td>
+            <td>
+                <button class="btn btn-info btn-sm" @click="showArticle(article.id)">Show</button>
+                <button class="btn btn-outline-secondary btn-sm" @click="getArticle(article.id)">Edit</button>
+                <button class="btn btn-outline-danger btn-sm" @click="deleteArticle(article.id)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+{% include "preview.html" %}
+{% include "modal.html" with id="addArticleModal" title="ADD ARTICLE" func="addArticle" article="newArticleTemplate" %}
+{% include "modal.html" with id="editArticleModal" title="EDIT ARTICLE" func="updateArticle" article="currentArticle" %}
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+    <div class="loading" v-if="loading">Loading&#8230;</div>
+</div>
+<footer v-if="!loading && pages_info.length > 1">
+    <ul class="pagination justify-content-center pagination-circle pg-blue pagination-lg">
+        <li v-for="info in pages_info" :class="['page-item', { active: page == info.link }]"
+            @click="page = info.link">
+            <a class="page-link">${info.number}</a>
+        </li>
+    </ul>
+</footer>
