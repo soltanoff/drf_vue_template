@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination, _get_page_links, _get_displayed_page_numbers
 from rest_framework.response import Response
@@ -7,10 +8,28 @@ from api.serilizers import ArticleSerializer
 from article.models import ArticleModel
 
 
+class SoftDjangoPaginator(Paginator):
+    def validate_number(self, number):
+        try:
+            if isinstance(number, float) and not number.is_integer():
+                raise ValueError
+            number = int(number)
+        except (TypeError, ValueError):
+            raise PageNotAnInteger(_('That page number is not an integer'))
+        
+        if number < 1:
+            raise EmptyPage(_('That page number is less than 1'))
+        
+        if number > self.num_pages and not (number == 1 and self.allow_empty_first_page):
+            return 1
+        return number
+
+
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 5
     max_page_size = 25
-    
+    django_paginator_class = SoftDjangoPaginator
+
     def page_number_to_url(self, page_number):
         base_url = self.request.build_absolute_uri()
         if page_number == 1:
