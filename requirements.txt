@@ -2,3 +2,4 @@ Django>=2.2.3
 djangorestframework>=3.9.4
 coreapi>=2.3.3
 pyyaml>=4.2b1
+coreapi>=2.3.3
