@@ -34,6 +34,7 @@ MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 Fill your database and run Django development server:
 ```
 $ pip3 install -r requirements.txt
+$ python3 manage.py makemigrations
 $ python3 manage.py migrate
 $ python3 manage.py collectstatic
 ```
