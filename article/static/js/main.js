@@ -18,7 +18,7 @@ new Vue({
         this.getArticles();
     },
     watch: {
-        page () {
+        page: function() {
             this.page && this.getArticles(this.page, false);
         },
         search: function() {
