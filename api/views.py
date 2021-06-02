@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.utils.urls import replace_query_param, remove_query_param
 
 from api.serilizers import ArticleSerializer
-from article.models import ArticleModel
+from api.models import ArticleModel
 
 
 class SoftDjangoPaginator(Paginator):
