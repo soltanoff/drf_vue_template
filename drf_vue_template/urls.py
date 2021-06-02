@@ -21,7 +21,6 @@ from django.urls import path
 
 from api.routers import router as api_router
 from api.routers import schema as api_schema
-from api.routers import schema_js as api_schema_js
 
 urlpatterns = [
     path('', include('article.urls')),
