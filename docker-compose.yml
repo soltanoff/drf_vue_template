@@ -7,19 +7,41 @@ services:
       dockerfile: dockerfiles/drf_vue_template.Dockerfile
     volumes:
       - ./data:/drf_vue_template/data
+      - ./database.db:/db/db.db
     expose:
       - "8000"
     restart: unless-stopped
-    command: python manage.py runserver 0.0.0.0:8000 --insecure
+    command: python manage.py runserver 0.0.0.0:8000
     depends_on:
+      - staticfiles
       - migration
 
-  migration:
-    image: drf_vue_template
+  staticfiles:
+    image: drf_vue_template_staticfiles
     build:
       context: .
       dockerfile: dockerfiles/drf_vue_template.Dockerfile
     volumes:
       - ./data:/drf_vue_template/data
       - ./static:/drf_vue_template/static
-    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate"
+    command: bash -c "python manage.py collectstatic --noinput"
+
+  migration:
+    image: drf_vue_template_migration
+    build:
+      context: .
+      dockerfile: dockerfiles/drf_vue_template.Dockerfile
+    volumes:
+      - ./data:/drf_vue_template/data
+      - ./database.db:/db/db.db
+    command: bash -c "python manage.py makemigrations && python manage.py migrate"
+
+  nginx:
+    image: nginx:1.13.3
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./static:/static
+    depends_on:
+      - drf_vue_template
