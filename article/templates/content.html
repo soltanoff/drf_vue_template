@@ -41,9 +41,10 @@
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
     <div class="loading" v-if="loading">Loading&#8230;</div>
 </div>
-<footer v-if="!loading && pages_info.length > 1">
+<footer class="pagination" v-if="!loading && pages_info.length > 1">
     <ul class="pagination justify-content-center pagination-circle pg-blue pagination-lg">
-        <li v-for="info in pages_info" :class="['page-item', { active: page == info.link }]"
+        <li v-for="info in pages_info"
+            :class="['page-item', { active: page == info.link }]"
             @click="page = info.link">
             <a class="page-link">${info.number}</a>
         </li>

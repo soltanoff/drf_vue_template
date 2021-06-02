@@ -24,7 +24,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     django_paginator_class = SoftDjangoPaginator
 
     def page_number_to_url(self, page_number):
-        base_url = self.request.build_absolute_uri()
+        base_url = self.request.path
         if page_number == 1:
             return remove_query_param(base_url, self.page_query_param)
         else:

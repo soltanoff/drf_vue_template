@@ -3,6 +3,12 @@
     width: 100%;
 }
 
+.pagination {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+}
+
 /* Absolute Center Spinner */
 .loading {
     position: fixed;
