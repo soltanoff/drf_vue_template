@@ -28,7 +28,6 @@ DATABASES = {
 # if you want to use debug_toolbar (dev server only)
 INSTALLED_APPS.append('debug_toolbar')
 MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
-
 ```
 
 Fill your database and run Django development server:
