@@ -57,7 +57,7 @@ new Vue({
                 .get(`/api/article/${id}/`)
                 .then((response) => {
                     this.currentArticle = response.data;
-                    this.preview = true;
+                    this.preview = !this.preview;
                 })
                 .catch((error) => {
                     this.preview = false;
