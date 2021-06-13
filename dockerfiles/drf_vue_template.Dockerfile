@@ -1,5 +1,5 @@
 FROM python:3.6.9
-MAINTAINER Ilya Soltanov <piccadillable@gamil.com>
+MAINTAINER Ilya Soltanov <piccadillable@gmail.com>
 ENV PYTHONBUFFERED 1
 COPY ./requirements.txt /drf_vue_template/requirements.txt
 WORKDIR /drf_vue_template
